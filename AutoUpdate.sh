@@ -443,9 +443,9 @@ TIME g "正在执行"${Update_explain}",更新期间请不要断开电源或重�
 sleep 2
 if [[ "${AutoUpdate_Mode}" == "1" ]] || [[ "${Update_Mode}" == "1" ]]; then
   chmod 775 "/etc/deletefile" && source /etc/deletefile
-  curl -fsSL https://ghproxy.com/https://raw.githubusercontent.com/281677160/common/main/Custom/Detectionnetwork > /mnt/Detectionnetwork
+  curl -fsSL https://ghproxy.com/https://raw.githubusercontent.com/gxnas/GXNAS-AutoBuild-OpenWrt-common/main/Custom/Detectionnetwork > /mnt/Detectionnetwork
   if [[ $? -ne 0 ]]; then
-    wget -P /mnt https://raw.githubusercontent.com/281677160/common/main/Custom/Detectionnetwork -O /mnt/Detectionnetwork
+    wget -P /mnt https://raw.githubusercontent.com/gxnas/GXNAS-AutoBuild-OpenWrt-common/main/Custom/Detectionnetwork -O /mnt/Detectionnetwork
   fi
   if [[ $? -eq 0 ]]; then
     chmod 775 "/mnt/Detectionnetwork"
