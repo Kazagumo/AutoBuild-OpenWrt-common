@@ -910,7 +910,8 @@ fi
 for X in $(cat "${CLEAR_PATH}" |sed 's/rm -rf//g' |sed 's/rm -fr//g' |sed 's/\r//' |sed 's/ //g' |cut -d '-' -f4- |sed '/^$/d' |sed 's/^/*/g' |sed 's/$/*/g'); do
    rm -rf "${X}"
 done
-rename -v "s/^openwrt/OpenWrt-${matrixtarget}-${Gujian_Date}/" *
+#rename -v "s/^openwrt/OpenWrt-${matrixtarget}-${Gujian_Date}/" *
+mv *generic-squashfs-combined.img.gz OpenWrt-${matrixtarget}-${Gujian_Date}.img.gz
 echo "FIRMWARE=$PWD" >> $GITHUB_ENV
 
 cd $HOME_PATH
