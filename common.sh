@@ -911,6 +911,7 @@ for X in $(cat "${CLEAR_PATH}" |sed 's/rm -rf//g' |sed 's/rm -fr//g' |sed 's/\r/
    rm -rf "${X}"
 done
 mv *generic-squashfs-combined.img.gz OpenWrt-${matrixtarget}-${Gujian_Date}.img.gz
+rm openwrt-x86-64-generic-squashfs-combined-efi.img.gz
 echo "FIRMWARE=$PWD" >> $GITHUB_ENV
 
 cd $HOME_PATH
