@@ -1,5 +1,5 @@
 #!/bin/bash
-# https://github.com/281677160/AutoBuild-OpenWrt
+# https://github.com/281677160/build-actions
 # common Module by 28677160
 # matrix.target=${matrixtarget}
 
@@ -233,7 +233,7 @@ case "${REPO_BRANCH}" in
 master)
   
   # 删除重复插件（LEDE）
-  find . -name 'luci-app-netdata' -o -name 'netdata' -o -name 'luci-theme-argon' -o -name 'mentohust' | xargs -i rm -rf {}
+  find . -name 'luci-theme-argon' -o -name 'mentohust' | xargs -i rm -rf {}
   find . -name 'luci-app-wrtbwmon' -o -name 'wrtbwmon' -o -name 'luci-app-eqos' | xargs -i rm -rf {}
   find . -name 'adguardhome' -o -name 'luci-app-adguardhome' -o -name 'luci-app-wol' | xargs -i rm -rf {}
 
@@ -241,15 +241,16 @@ master)
 22.03)
   
   # 删除重复插件（Lienol-22.03）
-  find . -name 'luci-app-netdata' -o -name 'netdata' -o -name 'luci-app-ttyd' -o -name 'luci-app-eqos' -o -name 'luci-theme-argon' | xargs -i rm -rf {}
+  find . -name 'luci-app-ttyd' -o -name 'luci-app-eqos' -o -name 'luci-theme-argon' | xargs -i rm -rf {}
   find . -name 'adguardhome' -o -name 'luci-app-adguardhome' -o -name 'luci-app-wol' -o -name 'luci-app-dockerman' -o -name 'luci-app-frpc' | xargs -i rm -rf {}
+  find . -name 'luci-app-wrtbwmon' -o -name 'wrtbwmon' | xargs -i rm -rf {}
 
 ;;
 openwrt-18.06)
 
   # 删除重复插件（天灵18.06）
   find . -name 'luci-app-argon-config' -o -name 'luci-theme-argon' -o -name 'luci-theme-argonv3' -o -name 'luci-app-eqos' | xargs -i rm -rf {}
-  find . -name 'luci-app-netdata' -o -name 'netdata' -o -name 'luci-app-cifs' | xargs -i rm -rf {}
+  find . -name 'luci-app-cifs' -o -name 'luci-app-openclash' | xargs -i rm -rf {}
   find . -name 'luci-app-wrtbwmon' -o -name 'wrtbwmon' -o -name 'luci-app-wol' | xargs -i rm -rf {}
   find . -name 'luci-app-adguardhome' -o -name 'adguardhome' -o -name 'luci-theme-opentomato' | xargs -i rm -rf {}
 
@@ -257,8 +258,9 @@ openwrt-18.06)
 openwrt-21.02)
 
   # 删除重复插件（天灵21.02）
-  find . -name 'luci-app-netdata' -o -name 'netdata' -o -name 'luci-app-cifs' -o -name 'luci-app-eqos' -o -name 'luci-theme-argon' | xargs -i rm -rf {}
-  find . -name 'luci-app-adguardhome' -o -name 'adguardhome' -o -name 'luci-app-wol' | xargs -i rm -rf {}
+  find . -name 'luci-app-cifs' -o -name 'luci-app-eqos' -o -name 'luci-theme-argon' | xargs -i rm -rf {}
+  find . -name 'luci-app-adguardhome' -o -name 'adguardhome' -o -name 'luci-app-wol' -o -name 'luci-app-openclash' | xargs -i rm -rf {}
+  find . -name 'luci-app-wrtbwmon' -o -name 'wrtbwmon' | xargs -i rm -rf {}
 
 ;;
 esac
@@ -355,7 +357,7 @@ EOF
 }
 
 function Diy_Mortal() {
-echo "正在执行：Tianling专用自定义"
+echo "正在执行：Mortal专用自定义"
 cat >>"${KEEPD}" <<-EOF
 /mnt/network
 /mnt/Detectionnetwork
@@ -420,7 +422,7 @@ fi
 }
 
 function Diy_Tianling() {
-echo "正在执行：Mortal专用自定义"
+echo "正在执行：Tianling专用自定义"
 cat >>"${KEEPD}" <<-EOF
 /mnt/network
 /mnt/Detectionnetwork
@@ -556,6 +558,17 @@ if [[ `grep -c "CONFIG_PACKAGE_luci-app-docker=y" ${HOME_PATH}/.config` -eq '1' 
     sed -i 's/CONFIG_PACKAGE_luci-app-docker=y/# CONFIG_PACKAGE_luci-app-docker is not set/g' ${HOME_PATH}/.config
     sed -i 's/CONFIG_PACKAGE_luci-i18n-docker-zh-cn=y/# CONFIG_PACKAGE_luci-i18n-docker-zh-cn is not set/g' ${HOME_PATH}/.config
     echo "TIME r \"您同时选择luci-app-docker和luci-app-dockerman，插件有冲突，相同功能插件只能二选一，已删除luci-app-docker\"" >>CHONGTU
+    echo "TIME z \"\"" >>CHONGTU
+    echo "TIME b \"插件冲突信息\"" > ${HOME_PATH}/Chajianlibiao
+  fi
+fi
+
+if [[ `grep -c "CONFIG_PACKAGE_luci-app-qbittorrent=y" ${HOME_PATH}/.config` -eq '1' ]]; then
+  if [[ `grep -c "CONFIG_PACKAGE_luci-app-qbittorrent-simple=y" ${HOME_PATH}/.config` -eq '1' ]]; then
+    sed -i 's/CONFIG_PACKAGE_luci-app-qbittorrent-simple=y/# CONFIG_PACKAGE_luci-app-qbittorrent-simple is not set/g' ${HOME_PATH}/.config
+    sed -i 's/CONFIG_PACKAGE_luci-i18n-qbittorrent-simple-zh-cn=y/# CONFIG_PACKAGE_luci-i18n-qbittorrent-simple-zh-cn is not set/g' ${HOME_PATH}/.config
+    sed -i 's/CONFIG_PACKAGE_qbittorrent=y/# CONFIG_PACKAGE_qbittorrent is not set/g' ${HOME_PATH}/.config
+    echo "TIME r \"您同时选择luci-app-qbittorrent和luci-app-qbittorrent-simple，插件有冲突，相同功能插件只能二选一，已删除luci-app-qbittorrent-simple\"" >>CHONGTU
     echo "TIME z \"\"" >>CHONGTU
     echo "TIME b \"插件冲突信息\"" > ${HOME_PATH}/Chajianlibiao
   fi
@@ -767,7 +780,6 @@ fi
 }
 
 function Diy_adguardhome() {
-## adguardhome编译时候带自选要不要编译内核了，此功能没用
 if [[ `grep -c "CONFIG_PACKAGE_luci-app-adguardhome=y" ${HOME_PATH}/.config` -eq '1' ]]; then
   echo "正在执行：给adguardhome下载核心"
   if [[ `grep -c "CONFIG_ARCH=\"x86_64\"" ${HOME_PATH}/.config` -eq '1' ]]; then
@@ -829,19 +841,19 @@ rm -rf $HOME_PATH/files/{LICENSE,README,REA*.md}
 }
 
 function Diy_webweb() {
-curl -fsSL https://raw.githubusercontent.com/gxnas/GXNAS-AutoBuild-OpenWrt-common/main/Custom/FinishIng.sh > $BASE_PATH/etc/FinishIng.sh
+curl -fsSL https://raw.githubusercontent.com/281677160/common/main/Custom/FinishIng.sh > $BASE_PATH/etc/FinishIng.sh
 if [[ $? -ne 0 ]]; then
-  wget -P $BASE_PATH/etc https://raw.githubusercontent.com/gxnas/GXNAS-AutoBuild-OpenWrt-common/main/Custom/FinishIng.sh -O $BASE_PATH/etc/FinishIng.sh
+  wget -P $BASE_PATH/etc https://raw.githubusercontent.com/281677160/common/main/Custom/FinishIng.sh -O $BASE_PATH/etc/FinishIng.sh
 fi
 chmod 775 $BASE_PATH/etc/FinishIng.sh
-curl -fsSL https://raw.githubusercontent.com/gxnas/GXNAS-AutoBuild-OpenWrt-common/main/Custom/FinishIng > $BASE_PATH/etc/init.d/FinishIng
+curl -fsSL https://raw.githubusercontent.com/281677160/common/main/Custom/FinishIng > $BASE_PATH/etc/init.d/FinishIng
 if [[ $? -ne 0 ]]; then
-  wget -P $BASE_PATH/etc/init.d https://raw.githubusercontent.com/gxnas/GXNAS-AutoBuild-OpenWrt-common/main/Custom/FinishIng -O $BASE_PATH/etc/init.d/FinishIng
+  wget -P $BASE_PATH/etc/init.d https://raw.githubusercontent.com/281677160/common/main/Custom/FinishIng -O $BASE_PATH/etc/init.d/FinishIng
 fi
 chmod 775 $BASE_PATH/etc/init.d/FinishIng
-curl -fsSL https://raw.githubusercontent.com/gxnas/GXNAS-AutoBuild-OpenWrt-common/main/Custom/webweb.sh > $BASE_PATH/etc/webweb.sh
+curl -fsSL https://raw.githubusercontent.com/281677160/common/main/Custom/webweb.sh > $BASE_PATH/etc/webweb.sh
 if [[ $? -ne 0 ]]; then
-  wget -P $BASE_PATH/etc https://raw.githubusercontent.com/gxnas/GXNAS-AutoBuild-OpenWrt-common/main/Custom/webweb.sh -O $BASE_PATH/etc/webweb.sh
+  wget -P $BASE_PATH/etc https://raw.githubusercontent.com/281677160/common/main/Custom/webweb.sh -O $BASE_PATH/etc/webweb.sh
 fi
 chmod 775 $BASE_PATH/etc/webweb.sh
 }
@@ -941,7 +953,23 @@ fi
 function Diy_part_sh() {
 echo "正在执行：运行$DIY_PART_SH文件"
 cd $HOME_PATH
+rm -rf master > /dev/null 2>&1
+rm -rf dev > /dev/null 2>&1
 /bin/bash $BUILD_PATH/$DIY_PART_SH
+rm -rf package/luci-app-openclash > /dev/null 2>&1
+if [ -n "$(ls -A "master" 2>/dev/null)" ]; then
+  git clone -b master --depth 1 https://github.com/vernesong/OpenClash package/luci-app-openclash
+  echo "正在使用master分支的openclash"
+elif [ -n "$(ls -A "dev" 2>/dev/null)" ]; then
+  git clone -b dev --depth 1 https://github.com/vernesong/OpenClash package/luci-app-openclash
+  echo "正在使用dev分支的openclash"
+else
+  echo "没发现该分支的openclash，默认使用master分支"
+  git clone -b master --depth 1 https://github.com/vernesong/OpenClash package/luci-app-openclash
+  echo "正在使用master分支的openclash"
+fi
+rm -rf master > /dev/null 2>&1
+rm -rf dev > /dev/null 2>&1
 }
 
 function Diy_feeds() {
@@ -966,6 +994,7 @@ function Diy_xinxi() {
 Plug_in="$(grep -i 'CONFIG_PACKAGE_luci-app' $HOME_PATH/.config && grep -i 'CONFIG_PACKAGE_luci-theme' $HOME_PATH/.config)"
 Plug_in2="$(echo "${Plug_in}" | grep -v '^#' |sed '/INCLUDE/d' |sed '/=m/d' |sed '/_Transparent_Proxy/d' |sed '/qbittorrent_static/d' |sed 's/CONFIG_PACKAGE_//g' |sed 's/=y//g' |sed 's/^/、/g' |sed 's/$/\"/g' |awk '$0=NR$0' |sed 's/^/TIME g \"       /g')"
 echo "${Plug_in2}" >Plug-in
+sed -i '/luci-app-qbittorrent-simple_dynamic/d' Plug-in > /dev/null 2>&1
 
 if [[ "${REPO_BRANCH}" == "openwrt-18.06" ]] || [[ "${REPO_BRANCH}" == "openwrt-21.02" ]]; then
   export KERNEL_PATC=""
