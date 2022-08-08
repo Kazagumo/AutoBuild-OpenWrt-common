@@ -129,8 +129,8 @@ echo "Upgrade_Date=$(date +%Y%m%d%H%M)" >> $GITHUB_ENV
 echo "Firmware_Date=$(date +%Y-%m%d-%H%M)" >> $GITHUB_ENV
 echo "Compte_Date=$(date +%Y年%m月%d号%H时%M分)" >> $GITHUB_ENV
 echo "Tongzhi_Date=$(date +%Y年%m月%d日)" >> $GITHUB_ENV
-echo "Gujian_Date=$(date +%m%d)" >> $GITHUB_ENV
-
+#echo "Gujian_Date=$(date +%m%d)" >> $GITHUB_ENV
+echo "Gujian_Date=$(date +%Y-%m%d-%H%M)" >> $GITHUB_ENV
 
 # github用的变量，如果有修改，下面Bendi_variable也要同步修改
 
@@ -921,7 +921,8 @@ fi
 for X in $(cat "${CLEAR_PATH}" |sed 's/rm -rf//g' |sed 's/rm -fr//g' |sed 's/\r//' |sed 's/ //g' |cut -d '-' -f4- |sed '/^$/d' |sed 's/^/*/g' |sed 's/$/*/g'); do
    rm -rf "${X}"
 done
-rename -v "s/^openwrt/${Gujian_Date}-${SOURCE}/" *
+mv *generic-squashfs-combined.img.gz OpenWrt-${matrixtarget}-${Gujian_Date}.img.gz
+rm openwrt-x86-64-generic-squashfs-combined-efi.img.gz
 echo "FIRMWARE=$PWD" >> $GITHUB_ENV
 
 cd $HOME_PATH
