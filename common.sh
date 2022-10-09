@@ -37,7 +37,7 @@ if [[ ${SOURCE_CODE} == "LEDE" ]]; then
   export REPO_BRANCH="master"
 elif [[ ${SOURCE_CODE} == "LIENOL" ]]; then
   export REPO_URL="https://github.com/Lienol/openwrt"
-  export REPO_BRANCH="22.03"
+  export REPO_BRANCH="21.02"
 elif [[ ${SOURCE_CODE} == "IMMORTAL" ]]; then
   export REPO_URL="https://github.com/immortalwrt/immortalwrt"
   export REPO_BRANCH="openwrt-21.02"
@@ -143,14 +143,14 @@ if [[ "${REPO_BRANCH}" == "master" ]]; then
   echo "SOURCE=Lede" >> $GITHUB_ENV
   echo "LUCI_EDITION=18.06" >> $GITHUB_ENV
   echo "MAINTAIN=Lean's" >> $GITHUB_ENV
-elif [[ "${REPO_BRANCH}" == "22.03" ]]; then
+elif [[ "${REPO_BRANCH}" == "21.02" ]]; then
   echo "ZZZ_PATH=${GITHUB_WORKSPACE}/openwrt/package/default-settings/files/zzz-default-settings" >> $GITHUB_ENV
   if [[ ! -f "${GITHUB_WORKSPACE}/openwrt/package/default-settings/files/zzz-default-settings" ]]; then
     TIME r "上游源码作者修改了zzz-default-settings文件的路径或者名称，找编译脚本的作者及时修改"
     exit 1
   fi
   echo "SOURCE=Lienol" >> $GITHUB_ENV
-  echo "LUCI_EDITION=22.03" >> $GITHUB_ENV
+  echo "LUCI_EDITION=21.02" >> $GITHUB_ENV
   echo "MAINTAIN=Lienol's" >> $GITHUB_ENV
 elif [[ "${REPO_BRANCH}" == "openwrt-18.06" ]]; then
   echo "ZZZ_PATH=${GITHUB_WORKSPACE}/openwrt/package/emortal/default-settings/files/99-default-settings" >> $GITHUB_ENV
@@ -193,7 +193,7 @@ elif [[ "${matrixtarget}" == "Lienol_source" ]]; then
     exit 1
   fi
   export SOURCE="Lienol"
-  export LUCI_EDITION="22.03"
+  export LUCI_EDITION="21.02"
 elif [[ "${matrixtarget}" == "Tianling_source" ]]; then
   export ZZZ_PATH="${HOME_PATH}/package/emortal/default-settings/files/99-default-settings"
   if [[ ! -f "${ZZZ_PATH}" ]]; then
@@ -237,9 +237,9 @@ master)
   find . -name 'adguardhome' -o -name 'luci-app-adguardhome' -o -name 'luci-app-wol' | xargs -i rm -rf {}
 
 ;;
-22.03)
+21.02)
   
-  # 删除重复插件（Lienol-22.03）
+  # 删除重复插件（Lienol-21.02）
   find . -name 'luci-app-ttyd' -o -name 'luci-app-eqos' -o -name 'luci-theme-argon' | xargs -i rm -rf {}
   find . -name 'adguardhome' -o -name 'luci-app-adguardhome' -o -name 'luci-app-wol' -o -name 'luci-app-dockerman' -o -name 'luci-app-frpc' | xargs -i rm -rf {}
   find . -name 'luci-app-wrtbwmon' -o -name 'wrtbwmon' | xargs -i rm -rf {}
@@ -274,7 +274,7 @@ master)
   echo -e "\nDISTRIB_RECOGNIZE='18'" >> "$BASE_PATH/etc/openwrt_release" && sed -i '/^\s*$/d' "$BASE_PATH/etc/openwrt_release"
 
 ;;
-22.03)
+21.02)
   
   # 给固件LUCI做个标记
   sed -i '/DISTRIB_RECOGNIZE/d' "$BASE_PATH/etc/openwrt_release"
@@ -939,7 +939,7 @@ Diy_organize
 }
 
 function Diy_Language() {
-if [[ "${REPO_BRANCH}" == "22.03" ]] || [[ "${REPO_BRANCH}" == "openwrt-21.02" ]]; then
+if [[ "${REPO_BRANCH}" == "21.02" ]] || [[ "${REPO_BRANCH}" == "openwrt-21.02" ]]; then
   echo "正在执行：把插件语言转换成zh_Hans"
   cd $HOME_PATH
   cp -Rf $HOME_PATH/build/common/Convert/zh_Hans.sh $HOME_PATH/zh_Hans.sh
