@@ -98,8 +98,8 @@ if [[ ! ${bendi_script} == "1" ]]; then
 else
   export INS="sudo apt-get"
 fi
-#sudo sed -i "s@http://.*archive.ubuntu.com@https://mirrors.tuna.tsinghua.edu.cn@g" /etc/apt/sources.list
-#sudo sed -i "s@http://.*security.ubuntu.com@https://mirrors.tuna.tsinghua.edu.cn@g" /etc/apt/sources.list
+sudo sed -i "s@http://.*archive.ubuntu.com@https://mirrors.tuna.tsinghua.edu.cn@g" /etc/apt/sources.list
+sudo sed -i "s@http://.*security.ubuntu.com@https://mirrors.tuna.tsinghua.edu.cn@g" /etc/apt/sources.list
 ${INS} update -y
 ${INS} full-upgrade -y
 ${INS} install -y ack antlr3 aria2 asciidoc autoconf automake autopoint binutils bison build-essential \
