@@ -113,11 +113,11 @@ if [[ ! ${bendi_script} == "1" ]]; then
   sudo mkdir -p /${matrixtarget}
   sudo chown $USER:$GROUPS /${matrixtarget}
 fi
-if [[ ! ${bendi_script} == "1" ]] && [[ "${matrixtarget}" == "openwrt_amlogic" ]]; then
+#if [[ ! ${bendi_script} == "1" ]] && [[ "${matrixtarget}" == "openwrt_amlogic" ]]; then
 #docker rmi $(docker images -q)
 #${INS} remove -y --purge azure-cli ghc zulu* hhvm llvm* firefox google* dotnet* powershell mysql* php* mssql-tools msodbcsql17 android*
 #sudo rm -rf /etc/mysql /etc/php /swapfile
-fi
+#fi
 }
 
 function Diy_variable() {
