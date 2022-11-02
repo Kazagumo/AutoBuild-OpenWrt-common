@@ -109,7 +109,7 @@ fi
 #${INS} autoremove -y --purge
 #${INS} clean
 if [[ ! ${bendi_script} == "1" ]]; then
-  sudo timedatectl set-timezone "$TZ"
+  #sudo timedatectl set-timezone "$TZ"
   sudo mkdir -p /${matrixtarget}
   sudo chown $USER:$GROUPS /${matrixtarget}
 fi
